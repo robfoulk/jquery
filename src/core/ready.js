@@ -7,22 +7,28 @@ import "../deferred.js";
 // The deferred used on DOM ready
 var readyList = jQuery.Deferred();
 
-jQuery.fn.ready = function( fn ) {
+
+// Go go!!
+
+// You are awesome!
+
+//Top-notch work!
+jQuery.fn.ready = function (fn) {
 
 	readyList
-		.then( fn )
+		.then(fn)
 
 		// Wrap jQuery.readyException in a function so that the lookup
 		// happens at the time of error handling instead of callback
 		// registration.
-		.catch( function( error ) {
-			jQuery.readyException( error );
-		} );
+		.catch(function (error) {
+			jQuery.readyException(error);
+		});
 
 	return this;
 };
 
-jQuery.extend( {
+jQuery.extend({
 
 	// Is the DOM ready to be used? Set to true once it occurs.
 	isReady: false,
@@ -32,10 +38,10 @@ jQuery.extend( {
 	readyWait: 1,
 
 	// Handle when the DOM is ready
-	ready: function( wait ) {
+	ready: function (wait) {
 
 		// Abort if there are pending holds or we're already ready
-		if ( wait === true ? --jQuery.readyWait : jQuery.isReady ) {
+		if (wait === true ? --jQuery.readyWait : jQuery.isReady) {
 			return;
 		}
 
@@ -43,36 +49,36 @@ jQuery.extend( {
 		jQuery.isReady = true;
 
 		// If a normal DOM Ready event fired, decrement, and wait if need be
-		if ( wait !== true && --jQuery.readyWait > 0 ) {
+		if (wait !== true && --jQuery.readyWait > 0) {
 			return;
 		}
 
 		// If there are functions bound, to execute
-		readyList.resolveWith( document, [ jQuery ] );
+		readyList.resolveWith(document, [jQuery]);
 	}
-} );
+});
 
 jQuery.ready.then = readyList.then;
 
 // The ready event handler and self cleanup method
 function completed() {
-	document.removeEventListener( "DOMContentLoaded", completed );
-	window.removeEventListener( "load", completed );
+	document.removeEventListener("DOMContentLoaded", completed);
+	window.removeEventListener("load", completed);
 	jQuery.ready();
 }
 
 // Catch cases where $(document).ready() is called
 // after the browser event has already occurred.
-if ( document.readyState !== "loading" ) {
+if (document.readyState !== "loading") {
 
 	// Handle it asynchronously to allow scripts the opportunity to delay ready
-	window.setTimeout( jQuery.ready );
+	window.setTimeout(jQuery.ready);
 
 } else {
 
 	// Use the handy event callback
-	document.addEventListener( "DOMContentLoaded", completed );
+	document.addEventListener("DOMContentLoaded", completed);
 
 	// A fallback to window.onload, that will always work
-	window.addEventListener( "load", completed );
+	window.addEventListener("load", completed);
 }
